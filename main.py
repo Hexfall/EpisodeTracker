@@ -21,9 +21,31 @@ def get_args() -> Namespace:
 
 def main() -> None:
     args = get_args()
-    print(args)
+
     with ShowManager() as sm:
-        sm.play(args.show)
+        if args.list_shows:
+            print("\n\t".join(sm.get_shows()))
+        else:
+            if args.show is None:
+                print('Missing show name to interact with.')
+            action = args.reset or args.set is not None or args.remove or args.add is not None
+            if args.add is not None:
+                sm.add_show(args.show, args.add)
+            if args.reset or args.set is not None or args.remove or not action or args.watch:
+                if args.show in sm.get_shows():
+                    if args.reset:
+                        sm.reset_index(args.show)
+                    if args.set is not None:
+                        if args.set.startswith("+") or args.set.startswith("-"):
+                            sm.inc_index(args.show, int(args.set))
+                        else:
+                            sm.set_index(args.show, int(args.set))
+                    if args.remove:
+                        sm.remove_show(args.show)
+                    elif not action or args.watch:
+                        sm.play(args.show)
+                else:
+                    print('Show not found in library.')
 
 
 if __name__ == '__main__':
