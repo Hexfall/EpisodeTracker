@@ -24,7 +24,9 @@ class ShowManager:
         self.__paths = {}
         self.__indexes = {}
         self.__load_data()
-        self.shows = list(self.__paths.keys())
+
+    def get_shows(self):
+        return list(self.__paths.keys())
 
     def __load_data(self) -> None:
         create_data_folder()
@@ -50,16 +52,19 @@ class ShowManager:
     def inc_index(self, show: str, index: int) -> None:
         self.set_index(show, self.__indexes[show]+index)
 
+    def reset_index(self, show: str) -> None:
+        self.set_index(show, 0)
+
     def remove_show(self, show: str) -> None:
-        self.__paths.pop(show, __default=None)
-        self.__indexes.pop(show, __default=None)
+        self.__paths.pop(show, None)
+        self.__indexes.pop(show, None)
 
     def add_show(self, show: str, path: str) -> None:
         self.__paths[show] = path
         self.__indexes[show] = 0
 
     def play(self, show: str) -> None:
-        if show not in self.shows:
+        if show not in self.get_shows():
             raise ValueError(f"Show {show} not in  library.")
         files = self.__get_files(show)
         self.set_index(show, self.__indexes[show] % len(files))
