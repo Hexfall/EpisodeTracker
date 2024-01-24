@@ -60,6 +60,8 @@ class ShowManager:
         self.__indexes.pop(show, None)
 
     def add_show(self, show: str, path: str) -> None:
+        if not Path(path).is_dir():
+            raise FileNotFoundError('Path is not a directory.')
         self.__paths[show] = path
         self.__indexes[show] = 0
 
