@@ -24,7 +24,7 @@ def main() -> None:
 
     with ShowManager() as sm:
         if args.list_shows:
-            print("\n\t".join(sm.get_shows()))
+            print("\n".join(sm.get_shows()))
         else:
             if args.show is None:
                 print('Missing show name to interact with.')
