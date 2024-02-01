@@ -73,6 +73,9 @@ class ShowManager:
         os.system(f"vlc -V x11 '{files[self.__indexes[show]]}' >/dev/null 2>&1 &")
         self.inc_index(show, 1)
 
+    def get_progress(self, show: str) -> str:
+        return f"{self.__indexes[show]:.>{len(str(max(self.__indexes.values())))}}/{len(self.__get_files(show))}"
+
     def __get_files(self, show: str) -> list:
         if show not in self.__paths.keys():
             raise Exception(f'Could not get files for show "{show}". Show not found in path list.')

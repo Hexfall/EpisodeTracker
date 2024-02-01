@@ -24,7 +24,10 @@ def main() -> None:
 
     with ShowManager() as sm:
         if args.list_shows:
-            print("\n".join(sm.get_shows()))
+            longest = max(map(len, sm.get_shows()))
+            print("\n".join(
+                [f'{show:.<{longest + 4}}{sm.get_progress(show)}' for show in sm.get_shows()]
+            ))
         else:
             if args.show is None:
                 print('Missing show name to interact with.')
