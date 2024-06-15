@@ -1,17 +1,6 @@
 import json
-import os
-import subprocess
 from pathlib import Path
-
-
-data_path = os.path.join(os.path.dirname(__file__), 'data')
-paths_path = data_path + '/paths.json'
-index_path = data_path + '/index.json'
-extensions = [
-    "mkv",
-    "mp4",
-    "avi",
-]
+from Constants import *
 
 
 def create_data_folder() -> None:
