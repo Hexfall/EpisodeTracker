@@ -70,7 +70,7 @@ class ShowManager:
             raise ValueError(f"Show {show} not in  library.")
         files = self.__get_files(show)
         self.set_index(show, self.__indexes[show] % len(files))
-        os.system(f"vlc -V x11 '{files[self.__indexes[show]]}' >/dev/null 2>&1 &")
+        os.system(f"vlc -V x11 \"{files[self.__indexes[show]]}\" >/dev/null 2>&1 &")
         self.inc_index(show, 1)
 
     def get_progress(self, show: str) -> str:
